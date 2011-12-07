@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://mattdarnall.net
+title: All of the catz
+subtitle:
+author: Matt Darnall
 simple_search: http://google.com/search
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -57,7 +57,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: mdarnall
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
@@ -80,7 +80,7 @@ googleplus_user:
 googleplus_hidden: false
 
 # Pinboard
-pinboard_user:
+pinboard_user: mdarnall
 pinboard_count: 3
 
 # Delicious
