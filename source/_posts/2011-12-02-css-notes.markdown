@@ -1,0 +1,18 @@
+---
+layout: post
+title: "CSS Notes"
+date: 2011-12-02 13:50
+comments: false
+categories: 
+---
+###My Reference Notes on CSS2 and CSS3
+
+#####Box Model
+There are two type of elements:  
+1. Box elements: *Elements that by default fill the entire parent container*  
+    <p> This is a classical block element </p>
+    <div> This is also an example of a block element </div>
+2. Inline elements: *Elements that are inline and don't disrupt the flow
+   of other elements on that line*  
+      <span>This is an example of an inline element</span>  
+
