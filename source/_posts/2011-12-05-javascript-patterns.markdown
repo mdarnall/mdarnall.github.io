@@ -148,8 +148,33 @@ When `new` is not used `this` inside the constructor will refer to the global ob
       };
     }
 ```
-Immediate Functions - a patterns that wraps a function and immediately
-executes it. It's helpful to wrap a set of code without leaving any
-global variables behind. 
 
+##### Scope 
+Scope is determined by functions, not by blocks in JavaScript.
+Parameters and variables defined in a function are not visible outside
+of that function. Also variables declared inside a function are visible
+anywhere everywhere within a function. One interesting case is when an
+inner function has a longer lifetime than its outer function:
 
+__Immediate Functions__   
+A pattern that wraps a function and immediately executes it. It helps
+avoid poluting the global namespace and also creates a closure,
+protecting _private_ variables. 
+
+```javascript
+  var counter = (function(){
+    var count = 0;
+    return {
+      increment : function (){
+        count += 1;
+      }, 
+      getCount : function (){
+        return count;
+      }
+    };
+  })();
+  counter.increment();
+  counter.getCount(); // 1
+  typeof counter.count; // undefined
+
+```
