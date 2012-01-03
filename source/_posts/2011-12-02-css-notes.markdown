@@ -10,9 +10,44 @@ categories:
 #####Box Model
 There are two type of elements:  
 1. Box elements: *Elements that by default fill the entire parent container*  
+
+``` html
     <p> This is a classical block element </p>
     <div> This is also an example of a block element </div>
+```
+
 2. Inline elements: *Elements that are inline and don't disrupt the flow
    of other elements on that line*  
-      <span>This is an example of an inline element</span>  
 
+``` html
+      <span>This is an example of an inline element</span>  
+```
+##### Selectors
+```css
+.warning.urgent {...} /* matches elements that have warning and urgent
+classes */
+
+.warning,.urgent { ... } /* apply styles to warning and urgent classes
+*/
+
+p[class] { ... } /* select p with a class attribute */
+
+a[href][title] {...} /* select a with href AND title attributes */
+
+p > a { ... } /* anchor that is a child of p */
+h1 + p { ... } /* adjacent sibling */
+
+:focus, :hover, :active { .. } /* dynamic psuedo classes */
+p:first-child
+h2:first-line
+h3:first-letter
+
+##### Specificity of selectors 
+calculated by a selectors value in the form: x,x,x,x, where x is a
+number based on:  
+* For every ID selector add 0,1,0,0
+* For every class, attribute or psuedo class add 0,0,1,0
+* For every element and psuedo element add 0,0,0,1
+* Inline style adds 1,0,0,0
+
+```
