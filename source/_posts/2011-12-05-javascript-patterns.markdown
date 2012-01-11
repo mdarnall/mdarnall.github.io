@@ -10,28 +10,15 @@ This is an ongoing set of notes based on my learning of JavaScript
 patterns and best practices. It's a collection of knowledge from various
 sources. 
 
-### Global Variables
-It's a good idea to minimize the number of global variables in a
-javascript application. The main reason is because of naming collisions
-between code bases. If two seperate code bases declare global variables
-with the same name unintended consequences are often a result.  
+In addition code examples are being maintained as an executable set of
+specifications in the [patterns.js](https://github.com/mdarnall/patterns.js) repo on GitHub. 
 
-Two main features of javascript as a language
-make the issue easier to create:  
-
-- Not having to declare variables before using them  
-- Implied globals - any variable you don't declare becomes a property
-   of the global object  
-    - ES5 strict mode will throw an error if assignments are made to implied globals  
-
-The easiest way to avoid global variables is to always declare variables
-with the `var` keyword. 
 
 ### Objects 
 Objects are mutable keyed collections that contain properties. A
 property can be any JavaScript value except for `undefined`.
 
-_Object Literal Notation_ is ideal for on-deman object creation. You can
+_Object Literal Notation_ is ideal for on-demand object creation. You can
 start with a blank object and add functionality as you need.  
 ``` javascript
     var dog = {};
@@ -65,13 +52,13 @@ later. Object literals are linked to the `Object.prototype` by default.
 * Provide local scope. Declarations of local variables get _hoisted_ to
   the top of local scope.  
 
-##### Syntax for creating functions  
+###### Syntax for creating functions  
 
 Named function expressions
 
 ``` javascript
 var add = function add (a,b) { 
-  return a+b;
+  return a + b;
 }
 ```
 Anonymous functions. Same as above but without a name:
@@ -88,7 +75,7 @@ function add (a,b) {
 ```
 ###### Invocation
 
-When a function is invoked it is passed it's declared parameters and two
+When a function is invoked it's  passed the declared parameters and two
 additional ones:  
 
 * a reference to `this`
@@ -121,9 +108,9 @@ to `this` is bound to the global object.
     return a + b; // 'this' refers to the global object here
   }
 ```
-###### Contructor Invocation
+###### Constructor Invocation
 When an object is created with the `new` keyword it's refered to as a
-_Contructor_. The object's reference to `this` is bound to that object. 
+_Constructor_. The object's reference to `this` is bound to that object. 
 
 ```javascript
   var MyObj = function (){
@@ -148,14 +135,14 @@ When `new` is not used `this` inside the constructor will refer to the global ob
     }
 ```
 
-##### Scope 
+###### Scope 
 Scope is determined by functions, not by blocks in JavaScript.
 Parameters and variables defined in a function are not visible outside
-of that function. Also variables declared inside a function are visible
-anywhere everywhere within a function. One interesting case is when an
-inner function has a longer lifetime than its outer function:
+of that function. Also, variables declared inside a function are visible
+anywhere within it -  One interesting case is when an
+inner function has a longer lifetime than its outer function.
 
-Immediate Functions   
+###### Immediate Functions   
 A pattern that wraps a function and immediately executes it. It helps
 avoid poluting the global namespace and also creates a closure,
 protecting _private_ variables. 
@@ -220,10 +207,10 @@ if (!Object.create) {
 }
 ```
 Another approach to code-reuse to the apply _psuedoclassical_ patterns
-of inheritance to JavaScript. The most straight forward of many patterns
-in this area is what is called the _Proxy Constructor Pattern_. The idea
-is to have the child prototype point at a _proxy_ object that in turn is
-linked to the parent via it's prototype. 
+of inheritance to JavaScript. The most straight forward and versitile way
+is called the _Proxy Constructor Pattern_. The idea is to have the child 
+prototype point at a _proxy_ object that in turn is linked to the parent 
+via it's prototype. 
 
 ``` javascript
   var inherit = (function(){
@@ -310,3 +297,19 @@ can just borrow the ones you need:
 notmyobj.dostuff.apply(myobj, [params]);
 
 ```
+### Global Variables
+It's a good idea to minimize the number of global variables in a
+JavaScript application. The main reason is because of naming collisions
+between code bases. If two seperate code bases declare global variables
+with the same name unintended consequences are often a result.  
+
+Two main features of javascript as a language
+make the issue easier to create:  
+
+- Not having to declare variables before using them  
+- Implied globals - any variable you don't declare becomes a property
+   of the global object  
+    - ES5 strict mode will throw an error if assignments are made to implied globals  
+
+The easiest way to avoid global variables is to always declare variables
+with the `var` keyword. 
