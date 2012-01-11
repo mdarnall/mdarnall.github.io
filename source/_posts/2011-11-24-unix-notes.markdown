@@ -9,3 +9,5 @@ published: false
 ### Unix Commands
 
 ``$ env``  list your environment variables
+
+``$ grep -F 'Foo' ./**/* `` Search recursive for the string 'Foo'
