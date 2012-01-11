@@ -190,11 +190,8 @@ thinking about how JavaScript differs from other languages:
 > can inherit from another class. JavaScript is a _prototypal_ language,
 > which means that _objects_ inherit directly from other _objects_
 
-While it is possible to create _psuedoclassical_ inheritance in
-JavaScript its not recomended because it's not the same as classical
-inheritance and unexpected behavior can occur. The preferred inheritance
-pattern is to embrace the prototypal behavior and focus on object
-inheriting properties of other objects. 
+The most natural inheritance pattern is to embrace the prototypal behavior 
+and focus on objects inheriting properties of other objects. 
 
 Prototypal inheritance is easy with the `Object.create` method in
 ECMAScript 5:
@@ -222,6 +219,88 @@ if (!Object.create) {
     };
 }
 ```
+Another approach to code-reuse to the apply _psuedoclassical_ patterns
+of inheritance to JavaScript. The most straight forward of many patterns
+in this area is what is called the _Proxy Constructor Pattern_. The idea
+is to have the child prototype point at a _proxy_ object that in turn is
+linked to the parent via it's prototype. 
+
+``` javascript
+  var inherit = (function(){
+    var F = function (){};
+    return function (C,P){
+      F.prototype = P.prototype;
+      C.prototype = new F();
+      C.parent = P.prototype;
+      C.prototype.constructor = C;
+    };
+  })();
+
+inherit(Child, Parent);
+```
+
+It is possible to make this pattern a little easier to use by wrapping
+it in some syntactical sugar, in a pattern called _Klass_  
+
+```javascript
+
+  var Klass = function(Parent, props) {
+    var Child
+    , F
+    , i;
+
+    // create a constructor function
+    Child = function (){
+      if(Child.parent && Child.parent.hasOwnProperty('initialize')){
+        Child.parent.initialize.apply(this, arguments);
+      }
+      if(Child.prototype.hasOwnProperty('initialize')){
+        Child.prototype.initialize.apply(this, arguments);
+      }
+    };
+
+    // inherit via the proxy prototype pattern
+    Parent = Parent || Object;
+
+    F = function (){};
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Child.parent = Parent.prototype;
+    Child.prototype.constructor = Child;
+
+    // copy properties
+    for(i in props){
+      if(props.hasOwnProperty(i)){
+        Child.prototype[i] = props[i];
+      }
+    }
+
+    return Child;
+  };
+
+```
+It can then be used like: 
+
+```javascript
+    var Man = Klass(null, {
+        initialize : function (name){
+          this.name = name;
+        }, 
+        getName : function (){
+          return this.name;
+        }
+    });
+
+    var SuperHuman = Klass(Man, {
+      initialize : function (){}, 
+      getName : function (){
+        var name = SuperHuman.parent.getName.call(this);
+        return "I am " + name;
+      }
+    });
+
+```
+
 Another pattern in code-reuse is the concept of borrowing methods. In
 cases where it doesn't make sense to inherit all of the properties you
 can just borrow the ones you need:
