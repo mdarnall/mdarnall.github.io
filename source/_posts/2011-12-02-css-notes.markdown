@@ -4,6 +4,7 @@ title: "CSS Notes"
 date: 2011-12-02 13:50
 comments: false
 categories: 
+published: false
 ---
 ###My Reference Notes on CSS2 and CSS3
 
@@ -42,12 +43,18 @@ p:first-child
 h2:first-line
 h3:first-letter
 
+```
+
 ##### Specificity of selectors 
-calculated by a selectors value in the form: x,x,x,x, where x is a
+Calculated by a selectors value in the form: x,x,x,x, where x is a
 number based on:  
+
 * For every ID selector add 0,1,0,0
 * For every class, attribute or psuedo class add 0,0,1,0
 * For every element and psuedo element add 0,0,0,1
 * Inline style adds 1,0,0,0
 
-```
+##### Inheritance 
+Inherited values have no specificity
+
+
