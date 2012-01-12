@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: css | DoneWell]]></title>
+  <link href="http://mdarnall.github.com/blog/categories/css/atom.xml" rel="self"/>
+  <link href="http://mdarnall.github.com/"/>
+  <updated>2012-01-11T16:02:10-08:00</updated>
+  <id>http://mdarnall.github.com/</id>
+  <author>
+    <name><![CDATA[Matt Darnall]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Vendor Prefixes]]></title>
+    <link href="http://mdarnall.github.com/blog/2011/03/04/css-vendor-prefixes/"/>
+    <updated>2011-03-04T00:00:00-08:00</updated>
+    <id>http://mdarnall.github.com/blog/2011/03/04/css-vendor-prefixes</id>
+    <content type="html"><![CDATA[<p>A quick note on using vendor-specific properties: when doing so it is
+generally a good idea to include the non-prefixed property as well, after all of
+the prefixed versions.</p>
+
+<p>This will ensure that when the time comes and the browser supports the
+property entirely it will be used. It will also override the prefixed version when that time comes.</p>
+
+<p>An example with border radius:
+<code>css
+.myClass {
+  -moz-border-radius : 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+}
+</code>
+Or even better using a pre-compilation tool like <a href="http://compass-style.org/reference/compass/css3/border_radius/">Compass</a> you can just do something like:
+<code>css
+.myClass {
+  @include border-radius(4px);
+}
+</code>
+And based on how you have configured the supported browsers it will take
+care of emitting the vendor specific properties.</p>
+]]></content>
+  </entry>
+  
+</feed>
