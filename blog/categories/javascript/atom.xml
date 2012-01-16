@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: JavaScript | DoneWell]]></title>
-  <link href="http://mdarnall.github.com/blog/categories/javascript/atom.xml" rel="self"/>
-  <link href="http://mdarnall.github.com/"/>
-  <updated>2012-01-11T16:20:58-08:00</updated>
-  <id>http://mdarnall.github.com/</id>
+  <link href="http://blog.mdarnall.com/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://blog.mdarnall.com/"/>
+  <updated>2012-01-16T11:26:35-08:00</updated>
+  <id>http://blog.mdarnall.com/</id>
   <author>
     <name><![CDATA[Matt Darnall]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[JavaScript Patterns]]></title>
-    <link href="http://mdarnall.github.com/blog/2010/12/05/javascript-patterns/"/>
+    <link href="http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns/"/>
     <updated>2010-12-05T12:03:00-08:00</updated>
-    <id>http://mdarnall.github.com/blog/2010/12/05/javascript-patterns</id>
+    <id>http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns</id>
     <content type="html"><![CDATA[<p>This is an ongoing set of notes based on my learning of JavaScript
 patterns and best practices. It's a collection of knowledge from various
 sources.</p>

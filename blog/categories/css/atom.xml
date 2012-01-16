@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: css | DoneWell]]></title>
-  <link href="http://mdarnall.github.com/blog/categories/css/atom.xml" rel="self"/>
-  <link href="http://mdarnall.github.com/"/>
-  <updated>2012-01-11T16:20:58-08:00</updated>
-  <id>http://mdarnall.github.com/</id>
+  <link href="http://blog.mdarnall.com/blog/categories/css/atom.xml" rel="self"/>
+  <link href="http://blog.mdarnall.com/"/>
+  <updated>2012-01-16T11:26:35-08:00</updated>
+  <id>http://blog.mdarnall.com/</id>
   <author>
     <name><![CDATA[Matt Darnall]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[CSS Vendor Prefixes]]></title>
-    <link href="http://mdarnall.github.com/blog/2011/03/04/css-vendor-prefixes/"/>
+    <link href="http://blog.mdarnall.com/blog/2011/03/04/css-vendor-prefixes/"/>
     <updated>2011-03-04T00:00:00-08:00</updated>
-    <id>http://mdarnall.github.com/blog/2011/03/04/css-vendor-prefixes</id>
+    <id>http://blog.mdarnall.com/blog/2011/03/04/css-vendor-prefixes</id>
     <content type="html"><![CDATA[<p>A quick note on using vendor-specific properties: when doing so it is
 generally a good idea to include the non-prefixed property as well, after all of
 the prefixed versions.</p>

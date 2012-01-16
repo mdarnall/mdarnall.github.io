@@ -1,19 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://mdarnall.github.com/blog/2010/12/05/javascript-patterns/</loc>
+        <loc>http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns/</loc>
         <lastmod>2012-01-11T15:39:56-08:00</lastmod>
     </url>
     <url>
-        <loc>http://mdarnall.github.com/blog/2011/03/04/css-vendor-prefixes/</loc>
+        <loc>http://blog.mdarnall.com/blog/2011/03/04/css-vendor-prefixes/</loc>
         <lastmod>2012-01-10T14:47:22-08:00</lastmod>
     </url>
     <url>
-        <loc>http://mdarnall.github.com/blog/archives/</loc>
-        <lastmod>2012-01-11T15:39:56-08:00</lastmod>
+        <loc>http://blog.mdarnall.com/blog/2012/01/16/mlk-day-2012/</loc>
+        <lastmod>2012-01-16T11:26:14-08:00</lastmod>
     </url>
     <url>
-        <loc>http://mdarnall.github.com/</loc>
-        <lastmod>2012-01-11T15:39:56-08:00</lastmod>
+        <loc>http://blog.mdarnall.com/blog/archives/</loc>
+        <lastmod>2012-01-16T11:26:14-08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.mdarnall.com/</loc>
+        <lastmod>2012-01-16T11:26:14-08:00</lastmod>
     </url>
 </urlset>
