@@ -6,8 +6,6 @@ comments: true
 categories: JavaScript 
 published: false
 ---
-# JavaScript Testing
-
 Once you have your framework of choice and you have written a suite of 
 tests what are you options for running those tests? This post will attempt to get into the options that are available and to discuss
 some of the pros and cons of each approach. While I am not new to
