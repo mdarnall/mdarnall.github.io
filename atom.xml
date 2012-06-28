@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[DoneWell]]></title>
+  <link href="http://blog.mdarnall.com/atom.xml" rel="self"/>
+  <link href="http://blog.mdarnall.com/"/>
+  <updated>2012-01-18T13:49:58-08:00</updated>
+  <id>http://blog.mdarnall.com/</id>
+  <author>
+    <name><![CDATA[Matt Darnall]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MLK Day 2012]]></title>
+    <link href="http://blog.mdarnall.com/blog/2012/01/16/mlk-day-2012/"/>
+    <updated>2012-01-16T11:17:00-08:00</updated>
+    <id>http://blog.mdarnall.com/blog/2012/01/16/mlk-day-2012</id>
+    <content type="html"><![CDATA[<p>I thought it would appropriate to remember Dr. Martin Luther King Jr
+with a quote. Today I am appreciative of his and others sacrifice.</p>
+
+<blockquote><p>I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Vendor Prefixes]]></title>
+    <link href="http://blog.mdarnall.com/blog/2011/03/04/css-vendor-prefixes/"/>
+    <updated>2011-03-04T00:00:00-08:00</updated>
+    <id>http://blog.mdarnall.com/blog/2011/03/04/css-vendor-prefixes</id>
+    <content type="html"><![CDATA[<p>A quick note on using vendor-specific properties: when doing so it is
+generally a good idea to include the non-prefixed property as well, after all of
+the prefixed versions.</p>
+
+<p>This will ensure that when the time comes and the browser supports the
+property entirely it will be used. It will also override the prefixed version when that time comes.</p>
+
+<p>An example with border radius:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.myClass</span> <span class="p">{</span>
+</span><span class='line'>  <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span> <span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or even better using a pre-compilation tool like <a href="http://compass-style.org/reference/compass/css3/border_radius/">Compass</a> you can just do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.myClass</span> <span class="p">{</span>
+</span><span class='line'>  <span class="o">@</span><span class="n">include</span> <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="p">(</span><span class="m">4px</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And based on how you have configured the supported browsers it will take
+care of emitting the vendor specific properties.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript Patterns]]></title>
+    <link href="http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns/"/>
+    <updated>2010-12-05T12:03:00-08:00</updated>
+    <id>http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns</id>
+    <content type="html"><![CDATA[<p>This is an ongoing set of notes based on my learning of JavaScript
+patterns and best practices. It&#8217;s a collection of knowledge from various
+sources.</p>
+
+<p>In addition code examples are being maintained as an executable set of
+specifications in the <a href="https://github.com/mdarnall/patterns.js">patterns.js</a> repo on GitHub.</p>
+
+<h3>Objects</h3>
+
+<p>Objects are mutable keyed collections that contain properties. A
+property can be any JavaScript value except for <code>undefined</code>.</p>
+
+<p><em>Object Literal Notation</em> is ideal for on-demand object creation. You can
+start with a blank object and add functionality as you need.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="c1">// adding a property </span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;benji&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// add a method</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">getName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">dog</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But you can also create the same object at once:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;benji&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">getName</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I like this quote from the JavaScript Patterns book</p>
+
+<blockquote><p>Another reason why the literal is the preferred pattern for object creation is that it emphasizes that objects are simply mutable hashes and not something that needs to be baked from a “recipe” (from a class).</p></blockquote>
+
+<h5>Prototype</h5>
+
+<p>JavaScript objects are all linked to a <em>prototype</em> object where it can
+inherit properties. This is important for code-reuse patterns discussed
+later. Object literals are linked to the <code>Object.prototype</code> by default.</p>
+
+<h3>Functions</h3>
+
+<ul>
+<li>Functions are first class objects. They can be passed around as values
+or augmented with properties and methods</li>
+<li>Provide local scope. Declarations of local variables get <em>hoisted</em> to
+the top of local scope.</li>
+</ul>
+
+
+<h6>Syntax for creating functions</h6>
+
+<p>Named function expressions</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Anonymous functions. Same as above but without a name:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Function Declarations:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Invocation</h6>
+
+<p>When a function is invoked it&#8217;s  passed the declared parameters and two
+additional ones:</p>
+
+<ul>
+<li>a reference to <code>this</code></li>
+<li>a reference to <code>arguments</code></li>
+</ul>
+
+
+<p>The reference to <code>this</code> depends on how the function was invoked.</p>
+
+<h6>Method Invocation</h6>
+
+<p>When a function is a property of an object, it is refered to as a
+method. When a method is invoked <code>this</code> refers to the containing object.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">count</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">increment</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">counter</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Function Invocation</h6>
+
+<p>When a function is not a property of an object, the function&#8217;s reference
+to <code>this</code> is bound to the global object.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// &#39;this&#39; refers to the global object here</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Constructor Invocation</h6>
+
+<p>When an object is created with the <code>new</code> keyword it&#8217;s refered to as a
+<em>Constructor</em>. The object&#8217;s reference to <code>this</code> is bound to that object.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">MyObj</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Matt&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyObj</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// &#39;Matt&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When <code>new</code> is not used <code>this</code> inside the constructor will refer to the global object instead of the object itself. So a helpful pattern is to enforce the use of <code>new</code> with a <em>self-invoking contructor</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="k">this</span> <span class="k">instanceof</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">)){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">say</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;My name is &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Scope</h6>
+
+<p>Scope is determined by functions, not by blocks in JavaScript.
+Parameters and variables defined in a function are not visible outside
+of that function. Also, variables declared inside a function are visible
+anywhere within it -  One interesting case is when an
+inner function has a longer lifetime than its outer function.</p>
+
+<h6>Immediate Functions</h6>
+
+<p>A pattern that wraps a function and immediately executes it. It helps
+avoid poluting the global namespace and also creates a closure,
+protecting <em>private</em> variables.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">increment</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>        <span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">getCount</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">count</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>  <span class="p">})();</span>
+</span><span class='line'>  <span class="nx">counter</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">counter</span><span class="p">.</span><span class="nx">getCount</span><span class="p">();</span> <span class="c1">// 1</span>
+</span><span class='line'>  <span class="k">typeof</span> <span class="nx">counter</span><span class="p">.</span><span class="nx">count</span><span class="p">;</span> <span class="c1">// undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Code-Reuse and Inheritance</h3>
+
+<p>Reusing code is an important topic to any discussion of software
+development. In classical languages this is usually done with
+inheritance. JavaScript supports many different ways in which code can
+be reused. I like this quote from JavaScript: The Good Parts when
+thinking about how JavaScript differs from other languages:</p>
+
+<blockquote><p>In classical languages, objects are instances of classes, and a class
+can inherit from another class. JavaScript is a <em>prototypal</em> language,
+which means that <em>objects</em> inherit directly from other <em>objects</em></p></blockquote>
+
+<p>The most natural inheritance pattern is to embrace the prototypal behavior
+and focus on objects inheriting properties of other objects.</p>
+
+<p>Prototypal inheritance is easy with the <code>Object.create</code> method in
+ECMAScript 5:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;Daddy&#39;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">parent</span><span class="p">);</span>
+</span><span class='line'><span class="nx">child</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// &#39;daddy&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method is easy to pollyfil in environments that don&#8217;t support it
+natively:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Object.create implementation only accepts the first parameter.&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="nx">F</span><span class="p">()</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another approach to code-reuse to the apply <em>psuedoclassical</em> patterns
+of inheritance to JavaScript. The most straight forward and versitile way
+is called the <em>Proxy Constructor Pattern</em>. The idea is to have the child
+prototype point at a <em>proxy</em> object that in turn is linked to the parent
+via it&#8217;s prototype.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">inherit</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){};</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">C</span><span class="p">,</span><span class="nx">P</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">P</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">C</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+</span><span class='line'>      <span class="nx">C</span><span class="p">.</span><span class="nx">parent</span> <span class="o">=</span> <span class="nx">P</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">C</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">C</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>  <span class="p">})();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">inherit</span><span class="p">(</span><span class="nx">Child</span><span class="p">,</span> <span class="nx">Parent</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is possible to make this pattern a little easier to use by wrapping
+it in some syntactical sugar, in a pattern called <em>Klass</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">Klass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Parent</span><span class="p">,</span> <span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">Child</span>
+</span><span class='line'>    <span class="p">,</span> <span class="nx">F</span>
+</span><span class='line'>    <span class="p">,</span> <span class="nx">i</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// create a constructor function</span>
+</span><span class='line'>    <span class="nx">Child</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="nx">Child</span><span class="p">.</span><span class="nx">parent</span> <span class="o">&amp;&amp;</span> <span class="nx">Child</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;initialize&#39;</span><span class="p">)){</span>
+</span><span class='line'>        <span class="nx">Child</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">initialize</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;initialize&#39;</span><span class="p">)){</span>
+</span><span class='line'>        <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">initialize</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// inherit via the proxy prototype pattern</span>
+</span><span class='line'>    <span class="nx">Parent</span> <span class="o">=</span> <span class="nx">Parent</span> <span class="o">||</span> <span class="nb">Object</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){};</span>
+</span><span class='line'>    <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">Child</span><span class="p">.</span><span class="nx">parent</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// copy properties</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">props</span><span class="p">){</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">i</span><span class="p">)){</span>
+</span><span class='line'>        <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">props</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">Child</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It can then be used like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Man</span> <span class="o">=</span> <span class="nx">Klass</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">getName</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">SuperHuman</span> <span class="o">=</span> <span class="nx">Klass</span><span class="p">(</span><span class="nx">Man</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){},</span>
+</span><span class='line'>  <span class="nx">getName</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">SuperHuman</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">getName</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;I am &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another pattern in code-reuse is the concept of borrowing methods. In
+cases where it doesn&#8217;t make sense to inherit all of the properties you
+can just borrow the ones you need:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">notmyobj</span><span class="p">.</span><span class="nx">dostuff</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">myobj</span><span class="p">,</span> <span class="p">[</span><span class="nx">params</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Global Variables</h3>
+
+<p>It&#8217;s a good idea to minimize the number of global variables in a
+JavaScript application. The main reason is because of naming collisions
+between code bases. If two seperate code bases declare global variables
+with the same name unintended consequences are often a result.</p>
+
+<p>Two main features of javascript as a language
+make the issue easier to create:</p>
+
+<ul>
+<li>Not having to declare variables before using them</li>
+<li>Implied globals - any variable you don&#8217;t declare becomes a property
+ of the global object
+
+<ul>
+<li>ES5 strict mode will throw an error if assignments are made to implied globals</li>
+</ul>
+</li>
+</ul>
+
+
+<p>The easiest way to avoid global variables is to always declare variables
+with the <code>var</code> keyword.</p>
+]]></content>
+  </entry>
+  
+</feed>

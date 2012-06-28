@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JavaScript | DoneWell]]></title>
+  <link href="http://blog.mdarnall.com/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://blog.mdarnall.com/"/>
+  <updated>2012-01-18T13:49:58-08:00</updated>
+  <id>http://blog.mdarnall.com/</id>
+  <author>
+    <name><![CDATA[Matt Darnall]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript Patterns]]></title>
+    <link href="http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns/"/>
+    <updated>2010-12-05T12:03:00-08:00</updated>
+    <id>http://blog.mdarnall.com/blog/2010/12/05/javascript-patterns</id>
+    <content type="html"><![CDATA[<p>This is an ongoing set of notes based on my learning of JavaScript
+patterns and best practices. It's a collection of knowledge from various
+sources.</p>
+
+<p>In addition code examples are being maintained as an executable set of
+specifications in the <a href="https://github.com/mdarnall/patterns.js">patterns.js</a> repo on GitHub.</p>
+
+<h3>Objects</h3>
+
+<p>Objects are mutable keyed collections that contain properties. A
+property can be any JavaScript value except for <code>undefined</code>.</p>
+
+<p><em>Object Literal Notation</em> is ideal for on-demand object creation. You can
+start with a blank object and add functionality as you need.<br/>
+``` javascript</p>
+
+<pre><code>var dog = {};
+// adding a property 
+dog.name = 'benji';
+// add a method
+dog.getName = function(){ 
+  return dog.name;
+};
+</code></pre>
+
+<p><code>
+But you can also create the same object at once:  
+</code> javascript</p>
+
+<pre><code>var dog = {
+  name : 'benji',
+  getName : function () {
+    return this.name;
+  }
+};
+</code></pre>
+
+<p>```
+I like this quote from the JavaScript Patterns book</p>
+
+<blockquote><p>Another reason why the literal is the preferred pattern for object creation is that it emphasizes that objects are simply mutable hashes and not something that needs to be baked from a “recipe” (from a class).</p></blockquote>
+
+<h5>Prototype</h5>
+
+<p>JavaScript objects are all linked to a <em>prototype</em> object where it can
+inherit properties. This is important for code-reuse patterns discussed
+later. Object literals are linked to the <code>Object.prototype</code> by default.</p>
+
+<h3>Functions</h3>
+
+<ul>
+<li>Functions are first class objects. They can be passed around as values
+or augmented with properties and methods</li>
+<li>Provide local scope. Declarations of local variables get <em>hoisted</em> to
+the top of local scope.</li>
+</ul>
+
+
+<h6>Syntax for creating functions</h6>
+
+<p>Named function expressions</p>
+
+<p><code>javascript
+var add = function add (a,b) {
+  return a + b;
+}
+</code>
+Anonymous functions. Same as above but without a name:
+<code>javascript
+var add = function (a,b) {
+  return a + b;
+}
+</code>
+Function Declarations:
+<code>javascript
+function add (a,b) {
+  return a + b;
+}
+</code></p>
+
+<h6>Invocation</h6>
+
+<p>When a function is invoked it's  passed the declared parameters and two
+additional ones:</p>
+
+<ul>
+<li>a reference to <code>this</code></li>
+<li>a reference to <code>arguments</code></li>
+</ul>
+
+
+<p>The reference to <code>this</code> depends on how the function was invoked.</p>
+
+<h6>Method Invocation</h6>
+
+<p>When a function is a property of an object, it is refered to as a
+method. When a method is invoked <code>this</code> refers to the containing object.</p>
+
+<p>```javascript
+  var counter = {</p>
+
+<pre><code>count : 0, 
+increment : function () {
+  this.count += 1;
+}
+</code></pre>
+
+<p>  };</p>
+
+<p>  counter.increment();
+```</p>
+
+<h6>Function Invocation</h6>
+
+<p>When a function is not a property of an object, the function's reference
+to <code>this</code> is bound to the global object.</p>
+
+<p>```javascript
+  function add (a, b) {</p>
+
+<pre><code>return a + b; // 'this' refers to the global object here
+</code></pre>
+
+<p>  }
+```</p>
+
+<h6>Constructor Invocation</h6>
+
+<p>When an object is created with the <code>new</code> keyword it's refered to as a
+<em>Constructor</em>. The object's reference to <code>this</code> is bound to that object.</p>
+
+<p>```javascript
+  var MyObj = function (){</p>
+
+<pre><code>this.name = 'Matt';
+</code></pre>
+
+<p>  }</p>
+
+<p>  var obj = new MyObj();
+  obj.name // 'Matt'
+```</p>
+
+<p>When <code>new</code> is not used <code>this</code> inside the constructor will refer to the global object instead of the object itself. So a helpful pattern is to enforce the use of <code>new</code> with a <em>self-invoking contructor</em></p>
+
+<p>``` javascript</p>
+
+<pre><code>var Person = function(name) { 
+  if(!(this instanceof arguments.callee)){
+    return new arguments.callee();
+  }
+  this.name = name;
+  this.say = function () {
+    return "My name is " + this.name;
+  };
+}
+</code></pre>
+
+<p>```</p>
+
+<h6>Scope</h6>
+
+<p>Scope is determined by functions, not by blocks in JavaScript.
+Parameters and variables defined in a function are not visible outside
+of that function. Also, variables declared inside a function are visible
+anywhere within it -  One interesting case is when an
+inner function has a longer lifetime than its outer function.</p>
+
+<h6>Immediate Functions</h6>
+
+<p>A pattern that wraps a function and immediately executes it. It helps
+avoid poluting the global namespace and also creates a closure,
+protecting <em>private</em> variables.</p>
+
+<p>```javascript
+  var counter = (function(){</p>
+
+<pre><code>var count = 0;
+return {
+  increment : function (){
+    count += 1;
+  }, 
+  getCount : function (){
+    return count;
+  }
+};
+</code></pre>
+
+<p>  })();
+  counter.increment();
+  counter.getCount(); // 1
+  typeof counter.count; // undefined</p>
+
+<p>```</p>
+
+<h3>Code-Reuse and Inheritance</h3>
+
+<p>Reusing code is an important topic to any discussion of software
+development. In classical languages this is usually done with
+inheritance. JavaScript supports many different ways in which code can
+be reused. I like this quote from JavaScript: The Good Parts when
+thinking about how JavaScript differs from other languages:</p>
+
+<blockquote><p>In classical languages, objects are instances of classes, and a class
+can inherit from another class. JavaScript is a <em>prototypal</em> language,
+which means that <em>objects</em> inherit directly from other <em>objects</em></p></blockquote>
+
+<p>The most natural inheritance pattern is to embrace the prototypal behavior
+and focus on objects inheriting properties of other objects.</p>
+
+<p>Prototypal inheritance is easy with the <code>Object.create</code> method in
+ECMAScript 5:</p>
+
+<p><code>javascript
+var parent = {
+  name : 'Daddy'
+};
+var child = Object.create(parent);
+child.name // 'daddy'
+</code></p>
+
+<p>This method is easy to pollyfil in environments that don't support it
+natively:</p>
+
+<p>```javascript
+if (!Object.create) {</p>
+
+<pre><code>Object.create = function (o) {
+    if (arguments.length &gt; 1) {
+        throw new Error('Object.create implementation only accepts the first parameter.');
+    }
+    function F() {}
+    F.prototype = o;
+    return new F();
+};
+</code></pre>
+
+<p>}
+```
+Another approach to code-reuse to the apply <em>psuedoclassical</em> patterns
+of inheritance to JavaScript. The most straight forward and versitile way
+is called the <em>Proxy Constructor Pattern</em>. The idea is to have the child
+prototype point at a <em>proxy</em> object that in turn is linked to the parent
+via it's prototype.</p>
+
+<p>``` javascript
+  var inherit = (function(){</p>
+
+<pre><code>var F = function (){};
+return function (C,P){
+  F.prototype = P.prototype;
+  C.prototype = new F();
+  C.parent = P.prototype;
+  C.prototype.constructor = C;
+};
+</code></pre>
+
+<p>  })();</p>
+
+<p>inherit(Child, Parent);
+```</p>
+
+<p>It is possible to make this pattern a little easier to use by wrapping
+it in some syntactical sugar, in a pattern called <em>Klass</em></p>
+
+<p>```javascript</p>
+
+<p>  var Klass = function(Parent, props) {</p>
+
+<pre><code>var Child
+, F
+, i;
+
+// create a constructor function
+Child = function (){
+  if(Child.parent &amp;&amp; Child.parent.hasOwnProperty('initialize')){
+    Child.parent.initialize.apply(this, arguments);
+  }
+  if(Child.prototype.hasOwnProperty('initialize')){
+    Child.prototype.initialize.apply(this, arguments);
+  }
+};
+
+// inherit via the proxy prototype pattern
+Parent = Parent || Object;
+
+F = function (){};
+F.prototype = Parent.prototype;
+Child.prototype = new F();
+Child.parent = Parent.prototype;
+Child.prototype.constructor = Child;
+
+// copy properties
+for(i in props){
+  if(props.hasOwnProperty(i)){
+    Child.prototype[i] = props[i];
+  }
+}
+
+return Child;
+</code></pre>
+
+<p>  };</p>
+
+<p>```
+It can then be used like:</p>
+
+<p>```javascript</p>
+
+<pre><code>var Man = Klass(null, {
+    initialize : function (name){
+      this.name = name;
+    }, 
+    getName : function (){
+      return this.name;
+    }
+});
+
+var SuperHuman = Klass(Man, {
+  initialize : function (){}, 
+  getName : function (){
+    var name = SuperHuman.parent.getName.call(this);
+    return "I am " + name;
+  }
+});
+</code></pre>
+
+<p>```</p>
+
+<p>Another pattern in code-reuse is the concept of borrowing methods. In
+cases where it doesn't make sense to inherit all of the properties you
+can just borrow the ones you need:</p>
+
+<p>```javascript</p>
+
+<p>notmyobj.dostuff.apply(myobj, [params]);</p>
+
+<p>```</p>
+
+<h3>Global Variables</h3>
+
+<p>It's a good idea to minimize the number of global variables in a
+JavaScript application. The main reason is because of naming collisions
+between code bases. If two seperate code bases declare global variables
+with the same name unintended consequences are often a result.</p>
+
+<p>Two main features of javascript as a language
+make the issue easier to create:</p>
+
+<ul>
+<li>Not having to declare variables before using them</li>
+<li>Implied globals - any variable you don't declare becomes a property
+ of the global object
+
+<ul>
+<li>ES5 strict mode will throw an error if assignments are made to implied globals</li>
+</ul>
+</li>
+</ul>
+
+
+<p>The easiest way to avoid global variables is to always declare variables
+with the <code>var</code> keyword.</p>
+]]></content>
+  </entry>
+  
+</feed>
