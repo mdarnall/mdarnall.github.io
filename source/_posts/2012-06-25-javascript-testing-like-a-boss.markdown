@@ -62,5 +62,25 @@ integration with QUnit and Jasmine on their wiki](http://code.google.com/p/phant
   on the JavaScript engine of the Headless browser
 
 ### Completly Headless Solution
+* Use JSDom and Node
+_What are the main differences here with the Healess version?_
 
-### Integrated browser
+### Browsers as a service  
+Using the build in browser runner but running the suite of tests against
+a number of browser combinations. Usually automated using cloud-based
+services. 
+
+* Examples: There are a few tools out there that help you with this
+  strategy:
+1. [Test Swarm] (https://github.com/jquery/testswarm/wiki)
+2. [BrowserStack](http://www.browserstack.com/automated-browser-testing-api)
+3. [Testling](http://testling.com/)
+
+###### Pros
+* Runs yours tests in a variety of real browsers - giving you more
+  confidence in your test results. Unfortunately nothing can truly replace the experience of running actual code in a real browser.
+* With the help of tools this process is doable. 
+
+##### Cons
+* Less documented? 
+* More time to setup?
