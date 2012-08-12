@@ -9,11 +9,14 @@ published: false
 
 _This is really only for browser-based apps_ 
 
-Once you have your framework of choice and you have written a suite of 
-tests what are you options for running those tests? This post will attempt to get into the options that are available and to discuss
-some of the pros and cons of each approach. While I am not new to
-testing JavaScript, I was dissapointed in the research I did to find out
-more about the options when it came to running those tests. 
+One of the things I've always been driven to in software development is having a
+codebase that is easily tested. As the majority of my time has been
+spent writing JavaScript and less server-side code I've been trying
+different approaches to writing testable client-side code and
+incorporating the same proven practices of continuous integration and
+test-driven development. The goal of this post is to discuss the various
+options that are out there for easily running and incorporating your
+client-side test suite into the developer workflow. 
 
 A lot of discussion in the community has taken place in terms on
 improving the toolchain of developing JavaScript and building and
@@ -24,27 +27,45 @@ running a solid test suite is an integral piece to that.
 _Note: almost make a scoring system. Each option does better/worse at
 several of the same points_
 
-### Browser runner
+
+
+Let's take a look at some of the options:
+
+### Browser-Based Test Runner
 All frameworks I've used have html based runners. These are fine to get
-started as they provide a good way to write tests that rely on the
-browser environment.
+started as they provide a fine way to run your test suite. As we will
+see later other options will use this as the main method of running the
+suite in an automated fashion.
+
+* Examples: Most popular testing frameworks come with a browser-based
+  runner:
+[QUnit](http://qunitjs.com/)
+[Jasmine](http://pivotal.github.com/jasmine/)
+[Mocha](http://visionmedia.github.com/mocha/)
+[Buster.JS](http://busterjs.org/docs/browser-testing/)
 
 ##### Pros 
-* As we will see in other options this option does a good job at proving
-  your tests run in a real environment - meaning your results reflect
-the results of your code in an environment that a user would actually
-use. Now of course this is only one of the potentially many environments
-your users would have but we will see a strategy based on this method
-that could help with this.
+* Easy - This is by far the easiest option to get started with. Simply
+  use the included html runner of your test framework and visit the page
+  your browser of choice. 
+* Accurate - This option does a good job at proving your tests are
+  reflective of an actual browser environment. It may only represent one
+  of the browser environments you may wish to target, but we'll explore
+  other options to help with this issue. 
 
-#### Cons
-* Slower - the overhead of launching a browser
-* Harder to automate
+##### Cons
+* Slower - In comparison to other options it can be slower to load up a
+  browser and visit the runner page. 
+* Harder to automate - While it may be possible to automate the process
+  of running the suite through a real browser it's not as easy as some
+  of the other options.
 * Usually requires hosting the runner with an HTTP server.
 
-### Headless browser runner
-Use a headless browser to load the html based runner and inspect it's
-results. 
+### Headless Browser-Based Test Runner
+This is a variation of our first option. The idea is to use a "headless" browser to
+load and parse the browser-based test runner. The difference is that you
+dont incur the cost of loading an entire browser. 
+
 * Examples: Taking the test suite and running them with the popular
   [PhantomJS](http://phantomjs.org/) project. 
 
