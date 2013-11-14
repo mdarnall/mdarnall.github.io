@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Running JavaScript Tests Like a Boss - Done Well</title>
+  <meta name="author" content="Matt Darnall">
+
+  
+  <meta name="description" content="One of the things I&rsquo;ve always been driven to in software development is having a
+codebase that is easily tested and where test execution is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mdarnall.github.io/posts/running-javascript-tests-like-a-boss">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Done Well" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28430796-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Done Well</a></h1>
+  
+    <h2>Notes from a Software Craftsman</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mdarnall.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="http://mdarnall.com">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Running JavaScript Tests Like a Boss</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T15:00:00-07:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the things I&rsquo;ve always been driven to in software development is having a
+codebase that is easily tested and where test execution is easy and
+integrated well into the development workflow. As the majority of my time has been
+spent writing JavaScript and less server-side code I&rsquo;ve been trying
+different approaches to writing testable JavaScript code and
+incorporating the same proven practices of continuous integration and
+test-driven development into my workflow.</p>
+
+<p>The goal of this post is to discuss the various
+options that are out there for easily running and incorporating your
+JavaScript suite into the development workflow. A lot of discussion in the community has taken place in terms on improving the toolchain of developing JavaScript and building and
+running a solid test suite is an integral piece to that.</p>
+
+<h3>Browser-Based Test Runner</h3>
+
+<p>Most frameworks have html based runners. These are fine to get
+started as they provide a good way to run your test suite in a browser
+of your choice. As we will
+see later other options will use this as the main method of running the
+suite in an automated fashion.</p>
+
+<p>Let&rsquo;s look at some examples. All popular testing frameworks include a browser-based
+test runner:</p>
+
+<ul>
+<li><a href="http://qunitjs.com/">QUnit</a></li>
+<li><a href="http://pivotal.github.com/jasmine/">Jasmine</a></li>
+<li><a href="http://visionmedia.github.com/mocha/">Mocha</a></li>
+<li><a href="http://busterjs.org/docs/browser-testing/">Buster.JS</a></li>
+</ul>
+
+
+<h5>Pros</h5>
+
+<ul>
+<li>Easy &ndash; This is by far the easiest option to get started with. Simply
+use the included html runner in your test framework and visit the page
+in your browser of choice.</li>
+<li>Representative &ndash; This option does a good job at proving your tests are
+reflective of an actual browser environment. It may only represent one
+of the browser environments you may wish to target, but we&rsquo;ll explore
+other options to help with this issue.</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+<ul>
+<li>Slower &ndash; In comparison to other options it can be slower to load up a
+browser and visit the runner page.</li>
+<li>Harder to automate &ndash; While it may be possible to automate the process
+of running the suite through a real browser it&rsquo;s not as easy as some
+of the other approaches.</li>
+<li>Requires the developer to host and to open the runner in the browser,
+instead of a simple command or something built into your build process.</li>
+</ul>
+
+
+<h3>Headless Browser-Based Test Runner</h3>
+
+<p>This is a variation of our first option. The idea is to use a &ldquo;headless&rdquo; browser to
+load and parse the browser-based test runner. The difference is that you
+don&rsquo;t incur the cost of loading an entire browser, but it means that you
+must use a script to parse and display the results of the browser-based
+runner.</p>
+
+<p>Several headless browsers are available:</p>
+
+<ul>
+<li><a href="http://phantomjs.org/">PhantomJS</a> &ndash; Headless Webkit with a JavaScript
+API based on <a href="http://trac.webkit.org/wiki/QtWebKit">QTWebKit</a>.</li>
+<li><a href="http://zombie.labnotes.org/">Zombie.js</a> &ndash; Insanely fast, headless full-stack
+testing using Node.js.</li>
+</ul>
+
+
+<p>This seems to be the option that is gaining the most popularity amongst developers. Several
+projects are using this approach:</p>
+
+<ul>
+<li><a href="https://github.com/twitter/bootstrap/">Twitter Bootstrap</a> &ndash; Their plugin unit-tests use PhantomJS to run.</li>
+<li><a href="https://github.com/cowboy/grunt">Grunt</a> &ndash; The task-based build tool for JavaScript has a built-in
+QUnit task that will run your tests with PhantomJS.</li>
+<li><a href="http://backstage.soundcloud.com/2011/09/mobile-unit-testing/">Soundcloud Mobile</a> &ndash; Used QUnit and PhantomJS on the mobile
+project.</li>
+</ul>
+
+
+<h5>Pros</h5>
+
+<ul>
+<li>Fast &ndash; Spinning up a headless browser is generally faster than using
+a fully fledged browser.</li>
+<li>Easy automated &ndash; The process of spinning up the headless browser
+can easily be scripted to run as part of your local development cycle
+or as part of your continuous integration cycle on a remote machine.</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+<ul>
+<li>The parsing code must be written to transform the browser runner to
+the command line output. This component may already exist based on the
+test framework you are using. For example, <a href="https://github.com/jquery/qunit/tree/master/addons/phantomjs">QUnit includes a runner for PhantomJS</a>.
+Any features offered by the framework must be extracted from the
+html output of the browser-based runner. For example, timings or
+stack traces for failures. Again, this may not be an issue unless you
+are writing the parsing code.</li>
+<li>Not represntative &ndash; The validity of the results really only indicates that your tests pass
+on the JavaScript engine of the headless browser, not a browser that
+your end users would use. As we&rsquo;ll see there are other approaches that mitigate this downside.</li>
+</ul>
+
+
+<h3>DOM Emulation in Node.js</h3>
+
+<p>This approach is an interesting one. While some testing frameworks
+already support testing JavaScript running under node.js you can
+incorporate a W3C DOM implementation into node so that tests cases that
+need a DOM can run along side those that don&rsquo;t. This approach isn&rsquo;t talked about as much in the
+community but I find it to be a nice hybrid approach for testing locally
+and as a first pass test with continuous integration.</p>
+
+<p>This approach needs the following:</p>
+
+<ul>
+<li><a href="https://github.com/tmpvar/jsdom/">JSDom</a></li>
+<li>A testing framework that supports node, like:
+
+<ul>
+<li><a href="http://visionmedia.github.com/mocha/">Mocha</a></li>
+<li><a href="http://busterjs.org/docs/node-testing/">Buster.js</a></li>
+</ul>
+</li>
+<li>A bootstrapping script that imports the right node modules and test
+suites.</li>
+</ul>
+
+
+<h5>Pros</h5>
+
+<ul>
+<li>Fast &ndash; Similar to the &ldquo;Headless&rdquo; testing approach these tests run
+fast.</li>
+<li>Native &ndash; No reason to write and maintain parsing code that extracts the testing
+frameworks output. Instead use a testing framework that natively
+supports running tests under node.js and add DOM support where needed.</li>
+<li>Easily automated &ndash; Just like the &ldquo;Headless&rdquo; testing approach node.js
+is easily integrated into normal developer workflow via the command
+line or on a server running your continuous integration process.</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+<ul>
+<li>Not representative &ndash; Again, like the &ldquo;headless&rdquo; approach these tests
+really only validate your suite against JSDom&rsquo;s W3C DOM implementation &ndash; not
+against any real browsers that your end users may use.</li>
+</ul>
+
+
+<h3>Browser Automation</h3>
+
+<p>Another good approach is to automate one or more real browsers that
+run your test framework&rsquo;s built-in runner. This is conceptually
+similar to the first approach, except you use the help of a tool to automate
+running the test in one or more browsers. This approach can be run locally in your development workflow, or
+using a cloud-based service. There are several interesting projects
+that help you with this approach:</p>
+
+<ul>
+<li><a href="http://yeti.cx/">Yeti</a> &ndash; A command-line tool for launching JavaScript
+unit tests in one or more browsers and reporting results. Currently
+only supports tests written in YUI Test.</li>
+<li><a href="http://ryanseddon.github.com/bunyip/">Bunyip</a> &ndash; An effort to combine
+BrowserStack and Yeti for cross browser testing as well as add support for other testing frameworks like Jasmine.</li>
+<li><a href="http://vojtajina.github.com/testacular/">Testacular</a> &ndash; Another
+command-line tool for launching JavaScript tests in one or more
+browsers as well as headless browsers. Relatively new at time of
+writing, but it has some interesting features.</li>
+<li><a href="https://github.com/jquery/testswarm/wiki">Test Swarm</a> &ndash; Distributed
+integration testing for JavaScript. <a href="https://github.com/jquery/testswarm/tree/master/scripts/addjob#test-suite-runs">It is limited in testing framework support</a></li>
+<li>Cloud Based Services:
+
+<ul>
+<li><a href="http://www.browserstack.com/automated-browser-testing-api">BrowserStack</a> &ndash; Provides browser-as-a-service for automated cross-browser testing. Because it is just an API for spinning up new browsers it is usually combined with another tool like Bunyip that needs browser instances to work. In fact, the JQuery project uses the combination of Test Swarm and BrowserStack to do it&rsquo;s cross-browser testing.</li>
+<li><a href="http://testling.com/">Testling</a> &ndash; A cross-browser testing platform
+that has an web API to allow running your tests in the cloud
+on various real browsers as well as locally using JSDom. Testling provides an
+integrated testing framework, but <a href="http://substack.net/posts/1db3bb/roll-your-own-test-runner-for-testling">adapters to other frameworks can be created as well.</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h5>Pros</h5>
+
+<ul>
+<li>Representative &ndash; Yours tests are run in a variety of real browsers, potentially event against a variety of devices, giving you more confidence in your test results. Unfortunately nothing can truly replace the experience of running actual code in a real browser.</li>
+<li>Flexible &ndash; Some of the tools provide a way to run your tests locally
+using something like JSDom or PhantomJS, but then also in the cloud
+against real browsers.</li>
+</ul>
+
+
+<h5>Cons</h5>
+
+<ul>
+<li>Complexity &ndash; Because of the fact that you are automating one or more
+browsers which have anomalies and can sometimes be fragile the
+overall solution is more complex than some of the other approaches.</li>
+<li>Setup Time &ndash; Depending on the library and tools used it may require
+more of an investment of time to get get up and running.</li>
+<li>Cost &ndash; Cloud-based services are not free but are relatively
+inexpensive.</li>
+</ul>
+
+
+<p>While there are many options out there it really comes down to your
+testing goals. Choosing a tool that is flexible and that can run in
+multiple ways is the best choice as it allows you to adapt as your
+needs change.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Darnall</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T15:00:00-07:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/javascript/'>JavaScript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://mdarnall.github.io/posts/running-javascript-tests-like-a-boss/" data-via="mdarnall" data-counturl="http://mdarnall.github.io/posts/running-javascript-tests-like-a-boss/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/jsdom-on-windows/" title="Previous Post: JSDom on Windows">&laquo; JSDom on Windows</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/posts/running-javascript-tests-like-a-boss/">Running JavaScript Tests Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/jsdom-on-windows/">JSDom on Windows</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/mlk-day-2012/">MLK Day 2012</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/css-vendor-prefixes/">CSS Vendor Prefixes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/javascript-patterns/">JavaScript Patterns</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mdarnall">@mdarnall</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mdarnall',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>My Pinboard</h1>
+  <ul id="pinboard_linkroll">Fetching linkroll...</ul>
+  <p><a href="http://pinboard.in/u:mdarnall">My Pinboard Bookmarks &raquo;</a></p>
+</section>
+<script type="text/javascript">
+  var linkroll = 'pinboard_linkroll'; //id target for pinboard list
+  var pinboard_user = "mdarnall"; //id target for pinboard list
+  var pinboard_count = 3; //id target for pinboard list
+  (function(){
+    var pinboardInit = document.createElement('script');
+    pinboardInit.type = 'text/javascript';
+    pinboardInit.async = true;
+    pinboardInit.src = '/javascripts/pinboard.js';
+    document.getElementsByTagName('head')[0].appendChild(pinboardInit);
+  })();
+</script>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Matt Darnall -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

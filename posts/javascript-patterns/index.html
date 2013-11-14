@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Done Well</title>
+  <title>JavaScript Patterns - Done Well</title>
   <meta name="author" content="Matt Darnall">
 
   
-  <meta name="description" content="One of the things I&rsquo;ve always been driven to in software development is having a
-codebase that is easily tested and where test execution is &hellip;">
+  <meta name="description" content="This is an ongoing set of notes based on my learning of JavaScript
+patterns and best practices. It&rsquo;s a collection of knowledge from various &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ codebase that is easily tested and where test execution is &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdarnall.github.io">
+  <link rel="canonical" href="http://mdarnall.github.io/posts/javascript-patterns">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Done Well" type="application/atom+xml">
@@ -77,504 +77,12 @@ codebase that is easily tested and where test execution is &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/posts/running-javascript-tests-like-a-boss/">Running JavaScript Tests Like a Boss</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-18T15:00:00-07:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the things I&rsquo;ve always been driven to in software development is having a
-codebase that is easily tested and where test execution is easy and
-integrated well into the development workflow. As the majority of my time has been
-spent writing JavaScript and less server-side code I&rsquo;ve been trying
-different approaches to writing testable JavaScript code and
-incorporating the same proven practices of continuous integration and
-test-driven development into my workflow.</p>
-
-<p>The goal of this post is to discuss the various
-options that are out there for easily running and incorporating your
-JavaScript suite into the development workflow. A lot of discussion in the community has taken place in terms on improving the toolchain of developing JavaScript and building and
-running a solid test suite is an integral piece to that.</p>
-
-<h3>Browser-Based Test Runner</h3>
-
-<p>Most frameworks have html based runners. These are fine to get
-started as they provide a good way to run your test suite in a browser
-of your choice. As we will
-see later other options will use this as the main method of running the
-suite in an automated fashion.</p>
-
-<p>Let&rsquo;s look at some examples. All popular testing frameworks include a browser-based
-test runner:</p>
-
-<ul>
-<li><a href="http://qunitjs.com/">QUnit</a></li>
-<li><a href="http://pivotal.github.com/jasmine/">Jasmine</a></li>
-<li><a href="http://visionmedia.github.com/mocha/">Mocha</a></li>
-<li><a href="http://busterjs.org/docs/browser-testing/">Buster.JS</a></li>
-</ul>
-
-
-<h5>Pros</h5>
-
-<ul>
-<li>Easy &ndash; This is by far the easiest option to get started with. Simply
-use the included html runner in your test framework and visit the page
-in your browser of choice.</li>
-<li>Representative &ndash; This option does a good job at proving your tests are
-reflective of an actual browser environment. It may only represent one
-of the browser environments you may wish to target, but we&rsquo;ll explore
-other options to help with this issue.</li>
-</ul>
-
-
-<h5>Cons</h5>
-
-<ul>
-<li>Slower &ndash; In comparison to other options it can be slower to load up a
-browser and visit the runner page.</li>
-<li>Harder to automate &ndash; While it may be possible to automate the process
-of running the suite through a real browser it&rsquo;s not as easy as some
-of the other approaches.</li>
-<li>Requires the developer to host and to open the runner in the browser,
-instead of a simple command or something built into your build process.</li>
-</ul>
-
-
-<h3>Headless Browser-Based Test Runner</h3>
-
-<p>This is a variation of our first option. The idea is to use a &ldquo;headless&rdquo; browser to
-load and parse the browser-based test runner. The difference is that you
-don&rsquo;t incur the cost of loading an entire browser, but it means that you
-must use a script to parse and display the results of the browser-based
-runner.</p>
-
-<p>Several headless browsers are available:</p>
-
-<ul>
-<li><a href="http://phantomjs.org/">PhantomJS</a> &ndash; Headless Webkit with a JavaScript
-API based on <a href="http://trac.webkit.org/wiki/QtWebKit">QTWebKit</a>.</li>
-<li><a href="http://zombie.labnotes.org/">Zombie.js</a> &ndash; Insanely fast, headless full-stack
-testing using Node.js.</li>
-</ul>
-
-
-<p>This seems to be the option that is gaining the most popularity amongst developers. Several
-projects are using this approach:</p>
-
-<ul>
-<li><a href="https://github.com/twitter/bootstrap/">Twitter Bootstrap</a> &ndash; Their plugin unit-tests use PhantomJS to run.</li>
-<li><a href="https://github.com/cowboy/grunt">Grunt</a> &ndash; The task-based build tool for JavaScript has a built-in
-QUnit task that will run your tests with PhantomJS.</li>
-<li><a href="http://backstage.soundcloud.com/2011/09/mobile-unit-testing/">Soundcloud Mobile</a> &ndash; Used QUnit and PhantomJS on the mobile
-project.</li>
-</ul>
-
-
-<h5>Pros</h5>
-
-<ul>
-<li>Fast &ndash; Spinning up a headless browser is generally faster than using
-a fully fledged browser.</li>
-<li>Easy automated &ndash; The process of spinning up the headless browser
-can easily be scripted to run as part of your local development cycle
-or as part of your continuous integration cycle on a remote machine.</li>
-</ul>
-
-
-<h5>Cons</h5>
-
-<ul>
-<li>The parsing code must be written to transform the browser runner to
-the command line output. This component may already exist based on the
-test framework you are using. For example, <a href="https://github.com/jquery/qunit/tree/master/addons/phantomjs">QUnit includes a runner for PhantomJS</a>.
-Any features offered by the framework must be extracted from the
-html output of the browser-based runner. For example, timings or
-stack traces for failures. Again, this may not be an issue unless you
-are writing the parsing code.</li>
-<li>Not represntative &ndash; The validity of the results really only indicates that your tests pass
-on the JavaScript engine of the headless browser, not a browser that
-your end users would use. As we&rsquo;ll see there are other approaches that mitigate this downside.</li>
-</ul>
-
-
-<h3>DOM Emulation in Node.js</h3>
-
-<p>This approach is an interesting one. While some testing frameworks
-already support testing JavaScript running under node.js you can
-incorporate a W3C DOM implementation into node so that tests cases that
-need a DOM can run along side those that don&rsquo;t. This approach isn&rsquo;t talked about as much in the
-community but I find it to be a nice hybrid approach for testing locally
-and as a first pass test with continuous integration.</p>
-
-<p>This approach needs the following:</p>
-
-<ul>
-<li><a href="https://github.com/tmpvar/jsdom/">JSDom</a></li>
-<li>A testing framework that supports node, like:
-
-<ul>
-<li><a href="http://visionmedia.github.com/mocha/">Mocha</a></li>
-<li><a href="http://busterjs.org/docs/node-testing/">Buster.js</a></li>
-</ul>
-</li>
-<li>A bootstrapping script that imports the right node modules and test
-suites.</li>
-</ul>
-
-
-<h5>Pros</h5>
-
-<ul>
-<li>Fast &ndash; Similar to the &ldquo;Headless&rdquo; testing approach these tests run
-fast.</li>
-<li>Native &ndash; No reason to write and maintain parsing code that extracts the testing
-frameworks output. Instead use a testing framework that natively
-supports running tests under node.js and add DOM support where needed.</li>
-<li>Easily automated &ndash; Just like the &ldquo;Headless&rdquo; testing approach node.js
-is easily integrated into normal developer workflow via the command
-line or on a server running your continuous integration process.</li>
-</ul>
-
-
-<h5>Cons</h5>
-
-<ul>
-<li>Not representative &ndash; Again, like the &ldquo;headless&rdquo; approach these tests
-really only validate your suite against JSDom&rsquo;s W3C DOM implementation &ndash; not
-against any real browsers that your end users may use.</li>
-</ul>
-
-
-<h3>Browser Automation</h3>
-
-<p>Another good approach is to automate one or more real browsers that
-run your test framework&rsquo;s built-in runner. This is conceptually
-similar to the first approach, except you use the help of a tool to automate
-running the test in one or more browsers. This approach can be run locally in your development workflow, or
-using a cloud-based service. There are several interesting projects
-that help you with this approach:</p>
-
-<ul>
-<li><a href="http://yeti.cx/">Yeti</a> &ndash; A command-line tool for launching JavaScript
-unit tests in one or more browsers and reporting results. Currently
-only supports tests written in YUI Test.</li>
-<li><a href="http://ryanseddon.github.com/bunyip/">Bunyip</a> &ndash; An effort to combine
-BrowserStack and Yeti for cross browser testing as well as add support for other testing frameworks like Jasmine.</li>
-<li><a href="http://vojtajina.github.com/testacular/">Testacular</a> &ndash; Another
-command-line tool for launching JavaScript tests in one or more
-browsers as well as headless browsers. Relatively new at time of
-writing, but it has some interesting features.</li>
-<li><a href="https://github.com/jquery/testswarm/wiki">Test Swarm</a> &ndash; Distributed
-integration testing for JavaScript. <a href="https://github.com/jquery/testswarm/tree/master/scripts/addjob#test-suite-runs">It is limited in testing framework support</a></li>
-<li>Cloud Based Services:
-
-<ul>
-<li><a href="http://www.browserstack.com/automated-browser-testing-api">BrowserStack</a> &ndash; Provides browser-as-a-service for automated cross-browser testing. Because it is just an API for spinning up new browsers it is usually combined with another tool like Bunyip that needs browser instances to work. In fact, the JQuery project uses the combination of Test Swarm and BrowserStack to do it&rsquo;s cross-browser testing.</li>
-<li><a href="http://testling.com/">Testling</a> &ndash; A cross-browser testing platform
-that has an web API to allow running your tests in the cloud
-on various real browsers as well as locally using JSDom. Testling provides an
-integrated testing framework, but <a href="http://substack.net/posts/1db3bb/roll-your-own-test-runner-for-testling">adapters to other frameworks can be created as well.</a></li>
-</ul>
-</li>
-</ul>
-
-
-<h5>Pros</h5>
-
-<ul>
-<li>Representative &ndash; Yours tests are run in a variety of real browsers, potentially event against a variety of devices, giving you more confidence in your test results. Unfortunately nothing can truly replace the experience of running actual code in a real browser.</li>
-<li>Flexible &ndash; Some of the tools provide a way to run your tests locally
-using something like JSDom or PhantomJS, but then also in the cloud
-against real browsers.</li>
-</ul>
-
-
-<h5>Cons</h5>
-
-<ul>
-<li>Complexity &ndash; Because of the fact that you are automating one or more
-browsers which have anomalies and can sometimes be fragile the
-overall solution is more complex than some of the other approaches.</li>
-<li>Setup Time &ndash; Depending on the library and tools used it may require
-more of an investment of time to get get up and running.</li>
-<li>Cost &ndash; Cloud-based services are not free but are relatively
-inexpensive.</li>
-</ul>
-
-
-<p>While there are many options out there it really comes down to your
-testing goals. Choosing a tool that is flexible and that can run in
-multiple ways is the best choice as it allows you to adapt as your
-needs change.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/jsdom-on-windows/">JSDom on Windows</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-26T15:41:00-07:00" pubdate data-updated="true">Jun 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/tmpvar/jsdom">JSDom</a> is a JavaScript implementation of the W3C DOM on Node.js. For our use case it proved to be a good solution to running unit tests that
-required the DOM.</p>
-
-<p>A simple <code>npm install jsdom</code> installed jsdom just fine on *nix
-systems but we needed it working on both *nix and Windows. Installing it on Windows required a few
-additional prerequisites. At the time several google searches unturned
-good tips, but none of them worked fully for us. This is an attempt at a
-complete picture of the issues and solutions.The issues discussed here may change as node progresses as it has
-changed several times in the recent past.</p>
-
-<p>The main issue at time of writing is that jsdom in turn requires a node module called <a href="https://github.com/brianmcd/contextify/">contextify</a>. Contextify
-requires a C++ addon, which must be built for the given platform. The
-way node builds these native addons is the build tool <a href="https://github.com/TooTallNate/node-gyp/">node-gyp</a>.</p>
-
-<h3>Prerequisites</h3>
-
-<ul>
-<li>Node.js (at writing time using 0.6.19) and NPM (1.1.24). These are
- packaged together when using the <a href="http://nodejs.org/#download">Windows installer</a>
-
-<ul>
-<li>Note: That my initial tests using node 0.8.0 and npm (1.1.32) also
-worked the same.</li>
-</ul>
-</li>
-<li>Python: Node-gyp currently recommends 2.7.x
-
-<ul>
-<li>Add python to your PATH</li>
-<li>Add a new environment variable <code>PYTHON=C:\path_to_python\python.exe</code>
-
-<ul>
-<li>This wasn&rsquo;t listed in the node-gyp instructions but based on the output of the script it seemed necessary.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Microsoft Visual C++. The express version works as a free
- alternative.</li>
-</ul>
-
-
-<h3>Installing</h3>
-
-<p>Once these prerequisites are installed jsdom is installed just like any
-other module via:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>npm install jsdom</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>You should see output from node-gyp and then msbuild being invoked to compile the native module. In our experience
-msbuild would output a warning that was safe to ignore:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MSB8012: TargetExt (.dll) does not match the Linker's OutputFile property value (.node)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>One of the other issues we had was finding a good, simple example to do a sanity check
-to make sure things were installed correctly. We found that the best example seemed to be the one from the site that
-loaded JQuery via a CDN and listed the links from Hacker News.</p>
-
-<div><script src='https://gist.github.com/3007798.js'></script>
-<noscript><pre><code>// Print all of the news items on hackernews
-var jsdom = require(&#39;jsdom&#39;);
-
-jsdom.env({
-  html: &#39;http://news.ycombinator.com/&#39;,
-  scripts: [
-    &#39;http://code.jquery.com/jquery-1.5.min.js&#39;
-  ],
-  done: function(errors, window) {
-    var $ = window.$;
-    console.log(&#39;HN Links&#39;);
-    $(&#39;td.title:not(:last) a&#39;).each(function() {
-      console.log(&#39; -&#39;, $(this).text());
-    });
-  }
-});</code></pre></noscript></div>
-
-
-<p>I&rsquo;m working on a related blog post about our JavaScript testing strategy
-and how we are using tools like Mocha, JSDom and others to write a
-test-driven web application.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/mlk-day-2012/">MLK Day 2012</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-16T11:17:00-08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I thought it would appropriate to remember Dr. Martin Luther King Jr
-with a quote. Today I am appreciative of his and others sacrifice.</p>
-
-<blockquote><p>I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/css-vendor-prefixes/">CSS Vendor Prefixes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-04T00:00:00-08:00" pubdate data-updated="true">Mar 4<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A quick note on using vendor-specific properties: when doing so it is
-generally a good idea to include the non-prefixed property as well, after all of
-the prefixed versions.</p>
-
-<p>This will ensure that when the time comes and the browser supports the
-property entirely it will be used. It will also override the prefixed version when that time comes.</p>
-
-<p>An example with border radius:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.myClass</span> <span class="p">{</span>
-</span><span class='line'>  <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span> <span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
-</span><span class='line'>  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or even better using a pre-compilation tool like <a href="http://compass-style.org/reference/compass/css3/border_radius/">Compass</a> you can just do something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.myClass</span> <span class="p">{</span>
-</span><span class='line'>  <span class="o">@</span><span class="n">include</span> <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="p">(</span><span class="m">4px</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And based on how you have configured the supported browsers it will take
-care of emitting the vendor specific properties.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/javascript-patterns/">JavaScript Patterns</a></h1>
+      <h1 class="entry-title">JavaScript Patterns</h1>
     
     
       <p class="meta">
@@ -597,7 +105,7 @@ care of emitting the vendor specific properties.</p>
   </header>
 
 
-  <div class="entry-content"><p>This is an ongoing set of notes based on my learning of JavaScript
+<div class="entry-content"><p>This is an ongoing set of notes based on my learning of JavaScript
 patterns and best practices. It&rsquo;s a collection of knowledge from various
 sources.</p>
 
@@ -1071,18 +579,59 @@ make the issue easier to create:</p>
 <p>The easiest way to avoid global variables is to always declare variables
 with the <code>var</code> keyword.</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Darnall</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2010-12-05T12:03:00-08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2010</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/categories/javascript/'>JavaScript</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://mdarnall.github.io/posts/javascript-patterns/" data-via="mdarnall" data-counturl="http://mdarnall.github.io/posts/javascript-patterns/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/posts/css-vendor-prefixes/" title="Next Post: CSS Vendor Prefixes">CSS Vendor Prefixes &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -1115,7 +664,7 @@ with the <code>var</code> keyword.</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/mdarnall">@mdarnall</a> on GitHub
@@ -1144,7 +693,7 @@ with the <code>var</code> keyword.</p>
 
 <section>
   <h1>My Pinboard</h1>
-  <ul id="pinboard_linkroll">Fetching linkroll&#8230;</ul>
+  <ul id="pinboard_linkroll">Fetching linkroll...</ul>
   <p><a href="http://pinboard.in/u:mdarnall">My Pinboard Bookmarks &raquo;</a></p>
 </section>
 <script type="text/javascript">
@@ -1165,6 +714,7 @@ with the <code>var</code> keyword.</p>
 
   
 </aside>
+
 
     </div>
   </div>
