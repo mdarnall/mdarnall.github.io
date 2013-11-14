@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My iOS Unit Testing Toolbox - Done Well</title>
+  <meta name="author" content="Matt Darnall">
+
+  
+  <meta name="description" content="For the past 6 months I&rsquo;ve been doing iOS development for Salesforce. Having spent most of my previous time doing JavaScript, Ruby and .NET &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mdarnall.github.io/posts/my-ios-unit-testing-toolbox">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Done Well" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28430796-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Done Well</a></h1>
+  
+    <h2>Notes from a Software Craftsman</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mdarnall.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="http://mdarnall.com">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">My iOS Unit Testing Toolbox</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-13T18:15:00-08:00" pubdate data-updated="true">Nov 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For the past 6 months I&rsquo;ve been doing iOS development for <a href="http://salesforce.com">Salesforce</a>. Having spent most of my previous time doing JavaScript, Ruby and .NET development I&rsquo;d gotten used to certain tools to accomplish my daily workflow. This is a quick writeup on the tools I&rsquo;m currently using to get a similar experience in iOS.</p>
+
+<h3>Testing Frameworks</h3>
+
+<p>I&rsquo;m big on unit testing &ndash; I mean I love it, and I love TDD. So naturally the tools I use need to support that workflow. I&rsquo;ve come to really love BDD style unit testing frameworks in <a href="https://github.com/rspec/rspec">Ruby with RSpec</a> and <a href="http://visionmedia.github.io/mocha/">Mocha</a> for JavaScript &ndash; so this was the first tool I went looking for.</p>
+
+<p>In the Objective-C community there are several frameworks, that at the surface, offered the BDD style I was looking for:</p>
+
+<ul>
+<li><a href="https://github.com/allending/Kiwi">Kiwi</a> &ndash; &ldquo;Simple BDD for iOS&rdquo;</li>
+<li><a href="https://github.com/pivotal/cedar">Cedar</a> &ndash; &ldquo;BDD style testing for Objective-C&rdquo;</li>
+<li><a href="https://github.com/specta/specta">Specta</a> &ndash; &ldquo;A light-weight TDD / BDD framework for Objective-C &amp; Cocoa&rdquo;</li>
+</ul>
+
+
+<p>All three have similar features and support the style you would expect. Here is an example of using Specta to describe an objects behavior:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='obj-c'><span class='line'><span class="n">import</span> <span class="s">&quot;specta.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">SpecBegin</span><span class="p">(</span><span class="n">Thing</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span><span class="p">(</span><span class="s">@&quot;Thing&quot;</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">beforeAll</span><span class="p">(</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is run once and only once before all of the examples</span>
+</span><span class='line'>    <span class="c1">// in this group and before any beforeEach blocks.</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">beforeEach</span><span class="p">(</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is run before each example.</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">it</span><span class="p">(</span><span class="s">@&quot;should do stuff&quot;</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is an example block. Place your assertions here.</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">it</span><span class="p">(</span><span class="s">@&quot;should do some stuff asynchronously&quot;</span><span class="p">,</span> <span class="o">^</span><span class="n">AsyncBlock</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Async example blocks need to invoke done() callback.</span>
+</span><span class='line'>    <span class="n">done</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">describe</span><span class="p">(</span><span class="s">@&quot;Nested examples&quot;</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="n">it</span><span class="p">(</span><span class="s">@&quot;should do even more stuff&quot;</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>      <span class="c1">// ...</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">pending</span><span class="p">(</span><span class="s">@&quot;pending example&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">afterEach</span><span class="p">(</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is run after each example.</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">afterAll</span><span class="p">(</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is run once and only once after all of the examples</span>
+</span><span class='line'>    <span class="c1">// in this group and after any afterEach blocks.</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">SpecEnd</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After playing with each of the three I decided to go with Specta and have been really happy with that choice. My criteria was based on:</p>
+
+<ul>
+<li>The ability to easily add the framework to an existing XCode project.</li>
+<li>The ability to write asynchronous test cases. Often I&rsquo;d need to test objects that take block arguments for callbacks &ndash; this was a must.</li>
+<li>Integration into other mainstream tools. XCTool and XCode are well supported with Specta.</li>
+<li>A good project &ldquo;pulse&rdquo; on <a href="https://github.com/specta/specta/pulse/monthly">GitHub</a>.</li>
+</ul>
+
+
+<h3>Matcher Library</h3>
+
+<p>Along with a good BDD style testing framework I wanted to find a matcher library that gave me a more fluent, readable syntax similar to that of RSpec or <a href="http://chaijs.com/">Chai</a> in JavaScript. Something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='obj-c'><span class='line'><span class="n">expect</span><span class="p">(</span><span class="s">@&quot;foo&quot;</span><span class="p">).</span><span class="n">to</span><span class="p">.</span><span class="n">equal</span><span class="p">(</span><span class="s">@&quot;foo&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">foo</span><span class="p">).</span><span class="n">notTo</span><span class="p">.</span><span class="n">equal</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="n">expect</span><span class="p">([</span><span class="n">bar</span> <span class="n">isBar</span><span class="p">]).</span><span class="n">to</span><span class="p">.</span><span class="n">equal</span><span class="p">(</span><span class="n">YES</span><span class="p">);</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">baz</span><span class="p">).</span><span class="n">to</span><span class="p">.</span><span class="n">equal</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Specta project came to the rescue again with <a href="https://github.com/specta/expecta">Expecta</a>. It has proven to work well and provides a lot of features:</p>
+
+<ul>
+<li>A good set of built-in <a href="https://github.com/specta/expecta#built-in-matchers">matchers</a></li>
+<li>The ability to define your own matchers</li>
+<li>Dynamic predicate matchers. Being able to write something like <code>expect(lightSwitch).isTurnedOn();</code>  with minimal effort is great.</li>
+<li>Testing framework agnostic. Expecta will work with not just Specta but other testing frameworks.</li>
+<li>A good project &ldquo;pulse&rdquo; on <a href="https://github.com/specta/expecta/pulse/monthly">GitHub</a></li>
+</ul>
+
+
+<h3>Isolation Library</h3>
+
+<p>In unit testing I often make use of an <a href="http://osherove.com/blog/2008/9/20/goodbye-mocks-farewell-stubs.html">Isolation Library</a>. While these are often referred to as Mock libraries, it&rsquo;s really just a library for making fake objects on the fly. I primarily need Mock and Stub objects and so far I&rsquo;ve been using <a href="http://ocmock.org">OCMock</a> with good success.</p>
+
+<p>Often with fake objects you want to create Stub objects that are not &ldquo;strict&rdquo; &ndash; meaning they don&rsquo;t complain if methods you didn&rsquo;t explicitly setup are called. One bummer is that with OCMock you must remember to create a &ldquo;Nice Mock&rdquo; in order to get that behavior:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='obj-c'><span class='line'><span class="kt">id</span> <span class="n">mock</span> <span class="o">=</span> <span class="p">[</span><span class="n">OCMockObject</span> <span class="nl">niceMockForClass:</span><span class="p">[</span><span class="n">SomeClass</span> <span class="n">class</span><span class="p">]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Argument constraints are another important feature for Mock objects. OCMock has a decent set of built-in argument constraints, and when the built-in constraints won&rsquo;t cut it you can reach for a custom predicate constraint via a block you implement:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='obj-c'><span class='line'><span class="p">[[</span><span class="n">mock</span> <span class="n">expect</span><span class="p">]</span> <span class="nl">someMethod:</span><span class="p">[</span><span class="n">OCMArg</span> <span class="nl">checkWithBlock:</span><span class="o">^</span><span class="kt">BOOL</span><span class="p">(</span><span class="kt">id</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="cm">/* return YES if value is ok */</span>
+</span><span class='line'><span class="p">}]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This actually turns out to be the way you can mock calls of methods that take block arguments. In a recent project we had an API Client object that used <a href="https://github.com/AFNetworking/AFNetworking">AFNetworking</a> to implement it&rsquo;s HTTP communication. Each method call would take a callback for when that communication completed. For unit tests that needed to Stub or Mock this interaction I used the following approach:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='obj-c'><span class='line'><span class="c1">// stub out the call to doAPIWork and callback with an error condition</span>
+</span><span class='line'><span class="p">[[</span><span class="n">client</span> <span class="n">stub</span><span class="p">]</span> <span class="n">doAPIWork</span> <span class="nl">callback:</span><span class="p">[</span><span class="n">OCMArg</span> <span class="nl">checkWithBlock:</span><span class="o">^</span><span class="kt">BOOL</span><span class="p">(</span><span class="kt">id</span> <span class="n">param</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// cast the param to our block type</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">passedBlock</span><span class="p">)(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="n">param</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// call the passed block back with our stubbed response</span>
+</span><span class='line'>    <span class="n">passedBlock</span><span class="p">(</span><span class="nb">nil</span><span class="p">,</span> <span class="p">[</span><span class="n">NSError</span> <span class="nl">errorWithDomain:</span><span class="s">@&quot;&quot;</span> <span class="nl">code:</span><span class="mi">500</span> <span class="nl">userInfo:</span><span class="err">@</span><span class="p">{}]);</span>
+</span><span class='line'>    <span class="c1">// indicate that the argument was fine to OCMock</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'><span class="p">}]];</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That being said &ndash; I&rsquo;m would encourage others to also evaluate <a href="https://github.com/jonreid/OCMockito">OCMockito</a> from <a href="http://qualitycoding.org/">Jon Reid</a>. Some key differences are:</p>
+
+<ul>
+<li><p>Mock objects are always &ldquo;nice,&rdquo; recording their calls instead of throwing exceptions about unspecified invocations. This makes tests less fragile.</p></li>
+<li><p>No expect-run-verify, making tests more readable. Mock objects record their calls, then you verify the methods you want.</p></li>
+<li><p>Verification failures are reported as unit test failures, identifying specific lines instead of throwing exceptions. This makes it easier to identify failures.</p></li>
+</ul>
+
+
+<h3>Test Runner</h3>
+
+<p>Writing tests is important, but equally important is running those tests to get feedback and to quickly iterate during development. For running tests I&rsquo;ve been making heavy use of <a href="https://github.com/facebook/xctool">XCTool</a>. XCTool is a tool for building and testing your application at the command line. This was big not only for those who prefer that local development environment but for running the tests during Continuous Integration on a remote server.</p>
+
+<p>One thing I quickly added to our project was XCTool&rsquo;s ability to have default arguments passed to the command by having a <code>.xctool-args</code> file in the root of your project.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">[</span>
+</span><span class='line'>  <span class="s2">&quot;-workspace&quot;</span><span class="p">,</span> <span class="s2">&quot;YourWorkspace.xcworkspace&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;-scheme&quot;</span><span class="p">,</span> <span class="s2">&quot;YourScheme&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;-configuration&quot;</span><span class="p">,</span> <span class="s2">&quot;Debug&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;-sdk&quot;</span><span class="p">,</span> <span class="s2">&quot;iphonesimulator&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;-arch&quot;</span><span class="p">,</span> <span class="s2">&quot;i386&quot;</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With that you can easily run your tests by running <code>$xctool test</code></p>
+
+<p>Better yet &ndash; for those who like to practice TDD you can combine XCTool with the power of <a href="https://github.com/guard/guard">Guard</a> so that you tests will automatically run when you make changes to any of your project source files. An easy way to get started with this is to use the <a href="https://github.com/siuying/guard-xctool-test">guar-xctool-test gem</a> from Francis Chong.</p>
+
+<h3>AppCode</h3>
+
+<p>I&rsquo;ve been using <a href="http://www.jetbrains.com/objc/">AppCode</a> over XCode for a little while now. This was mainly because I had become so used to the features of JetBrains IDE&rsquo;s over the years it was hard to go back. I&rsquo;ve used their products for developing Java with IntelliJ, Ruby with RubyMine, JavaScript with WebStorm and .NET with ReSharper. Features like refactoring, code analysis and source navigation make it at least worth a try.</p>
+
+<hr />
+
+<p><em>The tools you use are really a personal preference &ndash; These are mine. As I&rsquo;m sure you already know these are not the only options out there. I encourage you to find the tools that make you productive and happy.</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Darnall</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-13T18:15:00-08:00" pubdate data-updated="true">Nov 13<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ios/'>ios</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://mdarnall.github.io/posts/my-ios-unit-testing-toolbox/" data-via="mdarnall" data-counturl="http://mdarnall.github.io/posts/my-ios-unit-testing-toolbox/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/running-javascript-tests-like-a-boss/" title="Previous Post: Running JavaScript Tests Like a Boss">&laquo; Running JavaScript Tests Like a Boss</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/posts/my-ios-unit-testing-toolbox/">My iOS Unit Testing Toolbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/running-javascript-tests-like-a-boss/">Running JavaScript Tests Like a Boss</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/jsdom-on-windows/">JSDom on Windows</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/mlk-day-2012/">MLK Day 2012</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/css-vendor-prefixes/">CSS Vendor Prefixes</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mdarnall">@mdarnall</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mdarnall',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>My Pinboard</h1>
+  <ul id="pinboard_linkroll">Fetching linkroll...</ul>
+  <p><a href="http://pinboard.in/u:mdarnall">My Pinboard Bookmarks &raquo;</a></p>
+</section>
+<script type="text/javascript">
+  var linkroll = 'pinboard_linkroll'; //id target for pinboard list
+  var pinboard_user = "mdarnall"; //id target for pinboard list
+  var pinboard_count = 3; //id target for pinboard list
+  (function(){
+    var pinboardInit = document.createElement('script');
+    pinboardInit.type = 'text/javascript';
+    pinboardInit.async = true;
+    pinboardInit.src = '/javascripts/pinboard.js';
+    document.getElementsByTagName('head')[0].appendChild(pinboardInit);
+  })();
+</script>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Matt Darnall -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
