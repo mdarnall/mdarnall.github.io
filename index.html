@@ -9,7 +9,7 @@
   <meta name="author" content="Matt Darnall">
 
   
-  <meta name="description" content="For the past 6 months I&rsquo;ve been doing iOS development for Salesforce. Having spent most of my previous time doing JavaScript, Ruby and .NET &hellip;">
+  <meta name="description" content="I had a great time presenting at Dreamforce &lsquo;13. After getting home and having time to reflect on the experience I wanted to do a quick summary &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/dreamforce-13/">Dreamforce &#8216;13</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T14:45:00-08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had a great time presenting at <a href="https://www.salesforce.com/dreamforce/DF13/">Dreamforce &lsquo;13</a>. After getting home and having time to reflect on the experience I wanted to do a quick summary of my thoughts.</p>
+
+<h3>The Session</h3>
+
+<p>I was super excited to talk about unit testing iOS applications. It&rsquo;s been a really fun topic to learn about. Given that it&rsquo;s a topic that can&rsquo;t be fully explored in just 45 minutes &ndash; so I tried to focus it down on what has had the most impact for me in the past 6 months.</p>
+
+<p>If I could summarize my session it would be this:</p>
+
+<blockquote><p>Testing doesn&rsquo;t have to be an afterthought in iOS. <a href="http://bit.ly/17Wg11i">Find the tools and frameworks</a> that support efficiency and happiness while using the <a href="http://bit.ly/1dYzyQc">Magic Tricks of Unit Testing</a> to write tests you will love. Please &ndash; spread the word about how you are doing it!</p></blockquote>
+
+<h3>Questions at the end</h3>
+
+<p>I got some really good feedback at the end of my session. Here are couple things we talked about:</p>
+
+<h5>API Drift and Mock objects.</h5>
+
+<p>I was asked whether or not using Mock objects can lead to situations where your unit tests pass but the application is broken. This was a great question &ndash; It&rsquo;s true that using mock objects (a form of a Fake) can cause what is known as &ldquo;API Drift&rdquo;. API Drift is when your Fake object drifts from the contract of the object it is faking. In these cases you can have tests that seemingly pass while your application is broken.</p>
+
+<p>It&rsquo;s up to the developer to make sure the fake object honors the contract of the object it is faking. It turns out to be easy with Objective-C and OCMock &ndash; the compiler won&rsquo;t let you stub or mock calls to selectors that don&rsquo;t exist.</p>
+
+<p><img src="/images/api_drift.png" /></p>
+
+<p>This is one of the great things about the compiled nature of Objective-C. With Ruby you have to usually take another step and say <code>call_original</code> so that if the method doesn&rsquo;t exist on the real object you fail the test.</p>
+
+<h5>Is TDD Possible with iOS?</h5>
+
+<p>I was asked whether or not TDD was possible with iOS. My answer is YES! I love TDD &ndash; the demo application was created with TDD. Part of this is the tools and frameworks you use to help support TDD &ndash; I&rsquo;d say the biggest one for me has been using <a href="www.jetbrains.com/objc/">AppCode</a> with all of it&rsquo;s powerful features for refactoring and navigation of a code base.</p>
+
+<p>A great read on TDD in iOS is <a href="http://amzn.to/17sFuyJ">Graham Lee&rsquo;s book on the topic</a>. Jon Reid also has <a href="http://bit.ly/1dgxG5X">several good screencasts </a> on TDD in context of iOS.</p>
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="0b20cce033f30131561206dd63e41523" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+
+<h3>Links</h3>
+
+<p>The various links from my talk:</p>
+
+<ul>
+<li><p><a href="http://bit.ly/HvRbZQ">My link bundle that contains links to resources I&rsquo;ve used to learn iOS unit testing</a></p></li>
+<li><p><a href="http://bit.ly/17Wg11i">My blog post about the tools and frameworks we are using</a></p></li>
+<li><p><a href="http://bit.ly/I2NDyB">Demo App Source Code</a></p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1358,6 +1438,10 @@ with the <code>var</code> keyword.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/posts/dreamforce-13/">Dreamforce &#8216;13</a>
+      </li>
+    
+      <li class="post">
         <a href="/posts/my-ios-unit-testing-toolbox/">My iOS Unit Testing Toolbox</a>
       </li>
     
@@ -1371,10 +1455,6 @@ with the <code>var</code> keyword.</p>
     
       <li class="post">
         <a href="/posts/mlk-day-2012/">MLK Day 2012</a>
-      </li>
-    
-      <li class="post">
-        <a href="/posts/css-vendor-prefixes/">CSS Vendor Prefixes</a>
       </li>
     
   </ul>

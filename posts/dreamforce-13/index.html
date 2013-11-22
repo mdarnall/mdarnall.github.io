@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: JavaScript - Done Well</title>
+  <title>Dreamforce '13 - Done Well</title>
   <meta name="author" content="Matt Darnall">
 
   
-  <meta name="description" content="Category: JavaScript">
+  <meta name="description" content="I had a great time presenting at Dreamforce &lsquo;13. After getting home and having time to reflect on the experience I wanted to do a quick summary &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdarnall.github.iocategories/javascript">
+  <link rel="canonical" href="http://mdarnall.github.io/posts/dreamforce-13">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Done Well" type="application/atom+xml">
@@ -77,66 +77,122 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: JavaScript</h1>
+    
+      <h1 class="entry-title">Dreamforce '13</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T14:45:00-08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>I had a great time presenting at <a href="https://www.salesforce.com/dreamforce/DF13/">Dreamforce &lsquo;13</a>. After getting home and having time to reflect on the experience I wanted to do a quick summary of my thoughts.</p>
 
-  
-  <h2>2012</h2>
+<h3>The Session</h3>
 
-<article>
-  
-<h1><a href="/posts/running-javascript-tests-like-a-boss/">Running JavaScript Tests Like a Boss</a></h1>
-<time datetime="2012-08-18T15:00:00-07:00" pubdate><span class='month'>Aug</span> <span class='day'>18</span> <span class='year'>2012</span></time>
+<p>I was super excited to talk about unit testing iOS applications. It&rsquo;s been a really fun topic to learn about. Given that it&rsquo;s a topic that can&rsquo;t be fully explored in just 45 minutes &ndash; so I tried to focus it down on what has had the most impact for me in the past 6 months.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/javascript/'>JavaScript</a></span>
-</footer>
+<p>If I could summarize my session it would be this:</p>
 
+<blockquote><p>Testing doesn&rsquo;t have to be an afterthought in iOS. <a href="http://bit.ly/17Wg11i">Find the tools and frameworks</a> that support efficiency and happiness while using the <a href="http://bit.ly/1dYzyQc">Magic Tricks of Unit Testing</a> to write tests you will love. Please &ndash; spread the word about how you are doing it!</p></blockquote>
 
-</article>
+<h3>Questions at the end</h3>
 
+<p>I got some really good feedback at the end of my session. Here are couple things we talked about:</p>
 
+<h5>API Drift and Mock objects.</h5>
 
-<article>
-  
-<h1><a href="/posts/jsdom-on-windows/">JSDom on Windows</a></h1>
-<time datetime="2012-06-26T15:41:00-07:00" pubdate><span class='month'>Jun</span> <span class='day'>26</span> <span class='year'>2012</span></time>
+<p>I was asked whether or not using Mock objects can lead to situations where your unit tests pass but the application is broken. This was a great question &ndash; It&rsquo;s true that using mock objects (a form of a Fake) can cause what is known as &ldquo;API Drift&rdquo;. API Drift is when your Fake object drifts from the contract of the object it is faking. In these cases you can have tests that seemingly pass while your application is broken.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/javascript/'>JavaScript</a></span>
-</footer>
+<p>It&rsquo;s up to the developer to make sure the fake object honors the contract of the object it is faking. It turns out to be easy with Objective-C and OCMock &ndash; the compiler won&rsquo;t let you stub or mock calls to selectors that don&rsquo;t exist.</p>
 
+<p><img src="/images/api_drift.png" /></p>
 
-</article>
+<p>This is one of the great things about the compiled nature of Objective-C. With Ruby you have to usually take another step and say <code>call_original</code> so that if the method doesn&rsquo;t exist on the real object you fail the test.</p>
 
+<h5>Is TDD Possible with iOS?</h5>
 
+<p>I was asked whether or not TDD was possible with iOS. My answer is YES! I love TDD &ndash; the demo application was created with TDD. Part of this is the tools and frameworks you use to help support TDD &ndash; I&rsquo;d say the biggest one for me has been using <a href="www.jetbrains.com/objc/">AppCode</a> with all of it&rsquo;s powerful features for refactoring and navigation of a code base.</p>
 
-  
-  <h2>2010</h2>
+<p>A great read on TDD in iOS is <a href="http://amzn.to/17sFuyJ">Graham Lee&rsquo;s book on the topic</a>. Jon Reid also has <a href="http://bit.ly/1dgxG5X">several good screencasts </a> on TDD in context of iOS.</p>
 
-<article>
-  
-<h1><a href="/posts/javascript-patterns/">JavaScript Patterns</a></h1>
-<time datetime="2010-12-05T12:03:00-08:00" pubdate><span class='month'>Dec</span> <span class='day'>05</span> <span class='year'>2010</span></time>
+<h3>Slides</h3>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/javascript/'>JavaScript</a></span>
-</footer>
+<script async class="speakerdeck-embed" data-id="0b20cce033f30131561206dd63e41523" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 
-</article>
+<h3>Links</h3>
+
+<p>The various links from my talk:</p>
+
+<ul>
+<li><p><a href="http://bit.ly/HvRbZQ">My link bundle that contains links to resources I&rsquo;ve used to learn iOS unit testing</a></p></li>
+<li><p><a href="http://bit.ly/17Wg11i">My blog post about the tools and frameworks we are using</a></p></li>
+<li><p><a href="http://bit.ly/I2NDyB">Demo App Source Code</a></p></li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Darnall</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T14:45:00-08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://mdarnall.github.io/posts/dreamforce-13/" data-via="mdarnall" data-counturl="http://mdarnall.github.io/posts/dreamforce-13/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/my-ios-unit-testing-toolbox/" title="Previous Post: My iOS Unit Testing Toolbox">&laquo; My iOS Unit Testing Toolbox</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
