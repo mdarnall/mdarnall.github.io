@@ -10,11 +10,11 @@ I had a great time presenting at [Dreamforce '13](https://www.salesforce.com/dre
 
 ### The Session
 
-I was super excited to talk about unit testing iOS applications. It's been a really fun topic to learn about. Given that it's a topic that can't be fully explored in just 45 minutes - so I tried to focus it down on what has had the most impact for me in the past 6 months. 
+I was super excited to talk about unit testing iOS applications - it's been a really fun topic to learn about the past 6 months. The general topic can be so large it's hard to condense that down to 45 minutes, so I tried to focus it on what has had the most impact for me lately. 
 
 If I could summarize my session it would be this:
 
->Testing doesn't have to be an afterthought in iOS. [Find the tools and frameworks](http://bit.ly/17Wg11i) that support efficiency and happiness while using the [Magic Tricks of Unit Testing](http://bit.ly/1dYzyQc) to write tests you will love. Please - spread the word about how you are doing it!
+>Testing doesn't have to be an afterthought in iOS. [Find the tools and frameworks](http://bit.ly/17Wg11i) that support efficiency and happiness while using the [Magic Tricks of Unit Testing](http://bit.ly/1dYzyQc) to write tests you will love. We also need to spread the word about testing in iOS!
 
 ### Questions at the end
 
