@@ -8,7 +8,7 @@ categories:
 
 I had a great time presenting at [Dreamforce '13](https://www.salesforce.com/dreamforce/DF13/). After getting home and having time to reflect on the experience I wanted to do a quick summary of my thoughts. 
 
-### The Session
+## The Session
 
 I was super excited to talk about unit testing iOS applications - it's been a really fun topic to learn about the past 6 months. The general topic can be so large it's hard to condense that down to 45 minutes, so I tried to focus it on what has had the most impact for me lately. 
 
@@ -16,7 +16,7 @@ If I could summarize my session it would be this:
 
 >Testing doesn't have to be an afterthought in iOS. [Find the tools and frameworks](http://bit.ly/17Wg11i) that support efficiency and happiness while using the [Magic Tricks of Unit Testing](http://bit.ly/1dYzyQc) to write tests you will love. We also need to spread the word about testing in iOS!
 
-### Questions at the end
+## Questions at the end
 
 I got some really good feedback at the end of my session. Here are couple things we talked about: 
 
@@ -25,7 +25,7 @@ I was asked whether or not using Mock objects can lead to situations where your 
 
 It's up to the developer to make sure the fake object honors the contract of the object it is faking. It turns out to be easy with Objective-C and OCMock - the compiler won't let you stub or mock calls to selectors that don't exist. 
 
-<img src="{{ root_url }}/images/api_drift.png" />
+<a href="{{ root_url }}/images/api_drift.png"><img src="{{ root_url }}/images/api_drift.png" /></a>
 
 This is one of the great things about the compiled nature of Objective-C. With Ruby you have to usually take another step and say `call_original` so that if the method doesn't exist on the real object you fail the test. 
 
@@ -36,10 +36,15 @@ I was asked whether or not TDD was possible with iOS. My answer is YES! I love T
 A great read on TDD in iOS is [Graham Lee's book on the topic](http://amzn.to/17sFuyJ). Jon Reid also has [several good screencasts ](http://bit.ly/1dgxG5X) on TDD in context of iOS. 
 
 
-### Slides
+## Slides
 <script async class="speakerdeck-embed" data-id="0b20cce033f30131561206dd63e41523" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-### Links
+## Video
+<div class="video-wrapper">
+    <iframe width="560" height="315" src="//www.youtube.com/embed/S5MvykD3yiE" frameborder="0" allowfullscreen></iframe>
+</div>
+
+## Links
 
 The various links from my talk:
 
