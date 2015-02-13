@@ -4,7 +4,7 @@
   <title><![CDATA[Done Well]]></title>
   <link href="http://mdarnall.github.io/atom.xml" rel="self"/>
   <link href="http://mdarnall.github.io/"/>
-  <updated>2013-11-27T09:13:10-08:00</updated>
+  <updated>2015-02-13T14:33:24-08:00</updated>
   <id>http://mdarnall.github.io/</id>
   <author>
     <name><![CDATA[Matt Darnall]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dreamforce '14]]></title>
+    <link href="http://mdarnall.github.io/posts/dreamforce-14/"/>
+    <updated>2014-12-17T14:04:00-08:00</updated>
+    <id>http://mdarnall.github.io/posts/dreamforce-14</id>
+    <content type="html"><![CDATA[<p>The anual Dreamforce event was once again held in San Francisco and again was an amazing event. This year was special for me because it so happened to coincide with the Giants playing in the NLCS during that week and I was lucky enough to see them win in Game 3 on their way to a World Championship.</p>
+
+<p>It also marked the second year for me presenting in the DevZone &ndash; this time I choose to talk about the unique approach our team has been using to develop Salesforce1 apps.</p>
+
+<p>I wanted to walk through how this approach really fit well with our team and how we have been leveraging it to develop some really cool apps. This approach is all about the empowering individuals and teams to build apps fast and with modern tools they already know and love.</p>
+
+<h2>Video</h2>
+
+<div class="video-wrapper">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0E18ezIO0Mk" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+<h2>Slides</h2>
+
+<script async class="speakerdeck-embed" data-id="b0923c40386e013275d562001b84dca3" data-ratio="1.77469670710572" src="http://mdarnall.github.io//speakerdeck.com/assets/embed.js"></script>
+
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://bit.ly/df14cascadia">My link bundle that contains all the references from the talk</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dreamforce '13]]></title>
